@@ -2,8 +2,8 @@
   "name": "number-safari",
   "version": "1.0.0",
   "description": "1st Grade Math Adventure - Interactive Learning Web App",
-  "main": "index.html",
   "scripts": {
+    "build": "echo static",
     "start": "node server.js"
   },
   "keywords": [
