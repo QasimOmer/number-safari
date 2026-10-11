@@ -30,7 +30,7 @@
         <span class="brand-mascot" id="mascotIcon">🚀</span>
         <div class="brand-text">
           <h1>Number Safari</h1>
-          <span class="subtitle">1st Grade Math Adventure! 🌟</span>
+          <span class="subtitle">1st Grade Math Studio 🌟</span>
         </div>
       </div>
 
@@ -57,33 +57,80 @@
       </div>
     </header>
 
+    <!-- Category Filter Bar -->
+    <div class="category-filter-bar">
+      <button class="cat-chip active" data-category="all">🌈 All Activities</button>
+      <button class="cat-chip" data-category="place-value">🧮 Place Value & Abacus</button>
+      <button class="cat-chip" data-category="counting">⏪ Counting & Sequences</button>
+      <button class="cat-chip" data-category="ordinal">🥇 Ordinal Numbers</button>
+      <button class="cat-chip" data-category="money">💰 Money (PKR)</button>
+      <button class="cat-chip" data-category="compare">⚖️ Comparison & Bonds</button>
+    </div>
+
     <!-- Top Navigation / Mode Selector -->
-    <nav class="mode-nav">
-      <button class="nav-btn active" data-mode="learn">
-        <span class="btn-emoji">🪜</span>
-        <span class="btn-text">Step Ladder</span>
+    <nav class="mode-nav" id="modeNav">
+      <!-- Place Value & Abacus -->
+      <button class="nav-btn active" data-mode="abacus" data-cat="place-value">
+        <span class="btn-emoji">🧮</span>
+        <span class="btn-text">Abacus Beads</span>
       </button>
-      <button class="nav-btn" data-mode="train">
+      <button class="nav-btn" data-mode="baseTen" data-cat="place-value">
+        <span class="btn-emoji">🧱</span>
+        <span class="btn-text">Tens & Ones Blocks</span>
+      </button>
+      <button class="nav-btn" data-mode="numberNames" data-cat="place-value">
+        <span class="btn-emoji">🔤</span>
+        <span class="btn-text">Number Names</span>
+      </button>
+
+      <!-- Ordinals -->
+      <button class="nav-btn" data-mode="ordinal" data-cat="ordinal">
+        <span class="btn-emoji">🎨</span>
+        <span class="btn-text">Color Ordinals</span>
+      </button>
+
+      <!-- Counting & Sequences -->
+      <button class="nav-btn" data-mode="backward10" data-cat="counting">
+        <span class="btn-emoji">⏪</span>
+        <span class="btn-text">Backward in 10s</span>
+      </button>
+      <button class="nav-btn" data-mode="beforeAfter" data-cat="counting">
+        <span class="btn-emoji">🎯</span>
+        <span class="btn-text">Before & After</span>
+      </button>
+      <button class="nav-btn" data-mode="learn" data-cat="counting">
+        <span class="btn-emoji">🪜</span>
+        <span class="btn-text">Ascending / Descending</span>
+      </button>
+      <button class="nav-btn" data-mode="train" data-cat="counting">
         <span class="btn-emoji">🚂</span>
         <span class="btn-text">Train Order</span>
       </button>
-      <button class="nav-btn" data-mode="balloons">
+      <button class="nav-btn" data-mode="balloons" data-cat="counting">
         <span class="btn-emoji">🎈</span>
         <span class="btn-text">Balloon Pop</span>
       </button>
-      <button class="nav-btn" data-mode="coins">
-        <span class="btn-emoji">🪙</span>
-        <span class="btn-text">Coin Toy Shop</span>
+
+      <!-- Money -->
+      <button class="nav-btn" data-mode="countMoney" data-cat="money">
+        <span class="btn-emoji">💵</span>
+        <span class="btn-text">Count the Money</span>
       </button>
-      <button class="nav-btn" data-mode="compare">
+      <button class="nav-btn" data-mode="coins" data-cat="money">
+        <span class="btn-emoji">🪙</span>
+        <span class="btn-text">PKR Toy Shop</span>
+      </button>
+
+      <!-- Comparison -->
+      <button class="nav-btn" data-mode="compare" data-cat="compare">
         <span class="btn-emoji">⚖️</span>
         <span class="btn-text">How Many Less?</span>
       </button>
-      <button class="nav-btn" data-mode="alligator">
+      <button class="nav-btn" data-mode="alligator" data-cat="compare">
         <span class="btn-emoji">🐊</span>
         <span class="btn-text">Hungry Alligator</span>
       </button>
-      <button class="nav-btn" data-mode="bonds">
+      <button class="nav-btn" data-mode="bonds" data-cat="compare">
         <span class="btn-emoji">🧩</span>
         <span class="btn-text">Ten Frame Bonds</span>
       </button>
@@ -116,10 +163,10 @@
 
     <!-- Mission Explainer Banner -->
     <div class="mission-banner" id="missionBanner">
-      <div class="mission-icon" id="missionIcon">🚀</div>
+      <div class="mission-icon" id="missionIcon">🧮</div>
       <div class="mission-content">
-        <h2 id="missionTitle">Ascending Order: Going UP! 🧗‍♂️</h2>
-        <p id="missionDesc">Put numbers from <strong>SMALLEST</strong> to <strong>BIGGEST</strong> (Low ➔ High)</p>
+        <h2 id="missionTitle">Abacus Beads: Tens and Ones!</h2>
+        <p id="missionDesc">Tap the rods to add beads and show the target number!</p>
       </div>
       <button id="btnSpeakRule" class="speak-btn" title="Hear Question Aloud">🔊 Read Aloud</button>
     </div>
@@ -127,78 +174,215 @@
     <!-- MAIN GAME WORKSPACE -->
     <main class="game-main">
 
-      <!-- ================= MODE 1: STEP LADDER (LEARN) ================= -->
-      <section id="modeLearn" class="game-view active">
-        <div class="view-header">
-          <h3>Interactive Number Tower</h3>
-          <p>Watch how numbers grow taller or slide lower! Click any bar to hear its note!</p>
-        </div>
-
-        <div class="tower-stage">
-          <div class="mascot-runner" id="mascotRunner">🐰</div>
-          <div class="towers-container" id="learnTowers">
-            <!-- Towers rendered by JS -->
+      <!-- ================= 1. ABACUS BEADS ================= -->
+      <section id="modeAbacus" class="game-view active">
+        <div class="abacus-container">
+          <div class="abacus-target-card">
+            <span>Show this number on the Abacus:</span>
+            <div class="target-badge" id="abacusTargetNum">34</div>
+            <div class="target-sub" id="abacusTargetSub">3 Tens and 4 Ones</div>
           </div>
-        </div>
 
-        <div class="learn-actions">
-          <button id="btnDemoAsc" class="fun-btn green">
-            <span>🪜 Climb Ascending (1 ➔ 10)</span>
-          </button>
-          <button id="btnDemoDesc" class="fun-btn orange">
-            <span>🛝 Slide Descending (10 ➔ 1)</span>
-          </button>
-          <button id="btnDemoRandom" class="fun-btn purple">
-            <span>🎲 Shuffle & Sort!</span>
-          </button>
+          <!-- The Physical 2-Rod Abacus -->
+          <div class="abacus-board">
+            <div class="abacus-frame-top">ABACUS (TENS & ONES)</div>
+            
+            <div class="abacus-rods-area">
+              <!-- Tens Rod -->
+              <div class="abacus-rod-column" id="rodTensCol">
+                <span class="rod-title">T (Tens)</span>
+                <div class="abacus-rod-wire" id="wireTens">
+                  <div class="beads-stack" id="stackTens"></div>
+                </div>
+                <div class="rod-controls">
+                  <button class="rod-btn plus" id="btnAddTen">+ Bead</button>
+                  <button class="rod-btn minus" id="btnSubTen">-</button>
+                </div>
+                <div class="rod-count-tag" id="countTensTag">0 Tens</div>
+              </div>
+
+              <!-- Ones Rod -->
+              <div class="abacus-rod-column" id="rodOnesCol">
+                <span class="rod-title">O (Ones)</span>
+                <div class="abacus-rod-wire" id="wireOnes">
+                  <div class="beads-stack" id="stackOnes"></div>
+                </div>
+                <div class="rod-controls">
+                  <button class="rod-btn plus" id="btnAddOne">+ Bead</button>
+                  <button class="rod-btn minus" id="btnSubOne">-</button>
+                </div>
+                <div class="rod-count-tag" id="countOnesTag">0 Ones</div>
+              </div>
+            </div>
+
+            <div class="abacus-frame-bottom">
+              <span id="abacusLiveTotal">Current Total: 0</span>
+            </div>
+          </div>
+
+          <div class="abacus-actions">
+            <button id="btnClearAbacus" class="fun-btn-sm red">↺ Reset Beads</button>
+            <button id="btnCheckAbacus" class="fun-btn green pulse">✅ Check My Abacus!</button>
+          </div>
         </div>
       </section>
 
-      <!-- ================= MODE 2: TRAIN STATION ================= -->
-      <section id="modeTrain" class="game-view">
-        <div class="train-track-area">
-          <div class="train-engine-track" id="trainEngineTrack">
-            <div class="train-engine">
-              <span class="engine-smoke">💨</span>
-              <span class="engine-icon">🚂</span>
-              <span class="engine-label">Number Express</span>
-            </div>
-            <!-- Carriages / Drop slots -->
-            <div class="carriages-container" id="carriagesContainer">
-              <!-- Rendered by JS -->
-            </div>
+      <!-- ================= 2. COLOR ORDINAL NUMBERS ================= -->
+      <section id="modeOrdinal" class="game-view">
+        <div class="ordinal-container">
+          <div class="ordinal-instruction-card">
+            <h3 id="ordinalPrompt">Color the 7th Bicycle with Pink!</h3>
+            <p>Count from left to right: 1st, 2nd, 3rd, 4th...</p>
           </div>
-        </div>
 
-        <div class="cargo-platform">
-          <div class="platform-header">
-            <h4>📦 Cargo Crates to Load (Click in order!):</h4>
-            <span class="cargo-hint" id="cargoHint">Find the next number...</span>
+          <!-- Color Palette -->
+          <div class="color-palette-bar" id="colorPalette">
+            <span class="palette-label">Pick Paint:</span>
+            <button class="paint-swatch active" data-color="#EF4444" style="background: #EF4444;" title="Red"></button>
+            <button class="paint-swatch" data-color="#3B82F6" style="background: #3B82F6;" title="Blue"></button>
+            <button class="paint-swatch" data-color="#10B981" style="background: #10B981;" title="Green"></button>
+            <button class="paint-swatch" data-color="#F59E0B" style="background: #F59E0B;" title="Yellow"></button>
+            <button class="paint-swatch" data-color="#8B5CF6" style="background: #8B5CF6;" title="Purple"></button>
+            <button class="paint-swatch" data-color="#EC4899" style="background: #EC4899;" title="Pink"></button>
           </div>
-          <div class="crates-dock" id="cratesDock">
+
+          <!-- Ordinal Track of 8-10 Items -->
+          <div class="ordinal-track" id="ordinalTrack">
             <!-- Rendered by JS -->
           </div>
         </div>
       </section>
 
-      <!-- ================= MODE 3: BALLOON POP ================= -->
-      <section id="modeBalloons" class="game-view">
-        <div class="balloon-sky" id="balloonSky">
-          <!-- Floating balloons rendered by JS -->
-        </div>
+      <!-- ================= 3. BACKWARD IN 10s & COMPLETE SEQUENCE ================= -->
+      <section id="modeBackward10" class="game-view">
+        <div class="sequence-container">
+          <div class="seq-prompt-card">
+            <h3 id="seqQuestionTitle">Backward Counting in 10s: Rocket Countdown! 🚀</h3>
+            <p id="seqQuestionDesc">Find the missing number to complete the pattern!</p>
+          </div>
 
-        <div class="popped-basket">
-          <h4>🧺 Popped in Order:</h4>
-          <div class="basket-slots" id="basketSlots">
-            <!-- Slots rendered by JS -->
+          <!-- Stepping Stones / Train cars -->
+          <div class="seq-track-stage" id="seqTrackStage">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Choices -->
+          <div class="seq-choices-area">
+            <h4>Tap the missing number:</h4>
+            <div class="seq-choices" id="seqChoices">
+              <!-- Choices rendered by JS -->
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- ================= MODE 4: COIN TOY SHOP ================= -->
+      <!-- ================= 4. WHAT IS NUMBER BEFORE, BETWEEN, AFTER ================= -->
+      <section id="modeBeforeAfter" class="game-view">
+        <div class="before-after-container">
+          <div class="ba-prompt-card">
+            <h3 id="baQuestionTitle">What number comes BEFORE?</h3>
+            <div class="ba-visual-sequence" id="baVisualSequence">
+              <!-- e.g. [ ? ] [ 25 ] or [ 14 ] [ ? ] [ 16 ] -->
+            </div>
+          </div>
+
+          <!-- Helper Number Line snippet -->
+          <div class="ba-number-line" id="baNumberLine">
+            <!-- Rendered by JS -->
+          </div>
+
+          <div class="ba-choices-area">
+            <h4>Pick the correct number:</h4>
+            <div class="ba-choices" id="baChoices">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 5. WRITE NUMBER NAMES ================= -->
+      <section id="modeNumberNames" class="game-view">
+        <div class="names-container">
+          <div class="names-showcase-card">
+            <span class="names-num-big" id="namesTargetNum">14</span>
+            <div class="names-speech">Tap the letters in order to spell the number name!</div>
+          </div>
+
+          <!-- Slots for Word Letters -->
+          <div class="word-slots-tray" id="wordSlotsTray">
+            <!-- Letter slots rendered by JS -->
+          </div>
+
+          <!-- Scrambled Letter Blocks -->
+          <div class="letter-blocks-tray" id="letterBlocksTray">
+            <!-- Letter chips rendered by JS -->
+          </div>
+
+          <div class="names-actions">
+            <button id="btnClearLetters" class="fun-btn-sm red">↺ Clear Letters</button>
+            <button id="btnHearWord" class="fun-btn-sm green">🔊 Hear Spelling</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 6. TENS AND ONES (BASE-10 BLOCKS) ================= -->
+      <section id="modeBaseTen" class="game-view">
+        <div class="base-ten-container">
+          <div class="base-ten-prompt">
+            <h3 id="baseTenTitle">Count the Tens rods and Ones blocks!</h3>
+            <div class="base-ten-equation" id="baseTenEquation">
+              <span id="baseTenTens">3 Tens</span> + <span id="baseTenOnes">5 Ones</span> = <strong id="baseTenTotal">?</strong>
+            </div>
+          </div>
+
+          <div class="base-ten-mat">
+            <!-- Tens column -->
+            <div class="mat-col mat-tens">
+              <span class="mat-label">Tens Rods (10 each)</span>
+              <div class="mat-blocks-area" id="matTensBlocks"></div>
+            </div>
+            <!-- Ones column -->
+            <div class="mat-col mat-ones">
+              <span class="mat-label">Ones Cubes (1 each)</span>
+              <div class="mat-blocks-area" id="matOnesBlocks"></div>
+            </div>
+          </div>
+
+          <div class="base-ten-choices-area">
+            <h4>What is the total number?</h4>
+            <div class="base-ten-choices" id="baseTenChoices"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 7. COUNT THE MONEY (PKR) ================= -->
+      <section id="modeCountMoney" class="game-view">
+        <div class="count-money-container">
+          <div class="count-money-prompt">
+            <h3>How much money is on the table? (PKR ₨)</h3>
+            <p>Tap any coin or note to count it into your total!</p>
+          </div>
+
+          <!-- Money Counter Display -->
+          <div class="money-table-surface" id="moneyTableSurface">
+            <!-- Rendered by JS: Pakistani coins and notes -->
+          </div>
+
+          <div class="money-tally-bar">
+            <span>Your Tapped Total: <strong id="moneyTappedTotal">Rs 0</strong></span>
+            <button id="btnResetMoneyCount" class="fun-btn-sm red">↺ Reset Tally</button>
+          </div>
+
+          <div class="money-choices-area">
+            <h4>Select the total amount:</h4>
+            <div class="money-choices" id="moneyChoices"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 8. COIN TOY SHOP ================= -->
       <section id="modeCoins" class="game-view">
         <div class="toy-shop-grid">
-          <!-- Left: Toy Showcase & Cash Register -->
           <div class="toy-showcase-panel">
             <div class="shopkeeper-speech" id="shopkeeperSpeech">
               "Hi there! Tap the coins to pay exact change!"
@@ -225,7 +409,6 @@
                 <div class="calc-status" id="regStatus">Need Rs 12 more</div>
               </div>
 
-              <!-- Coins deposited in tray -->
               <div class="paid-coins-tray" id="paidCoinsTray">
                 <span class="empty-tray-hint">Click PKR coins below to add!</span>
               </div>
@@ -237,7 +420,6 @@
             </div>
           </div>
 
-          <!-- Right: Coins Wallet Tray & Toy Backpack -->
           <div class="coins-wallet-panel">
             <h4>🪙 PKR Wallet (Click to Add):</h4>
             <div class="coins-selector">
@@ -273,7 +455,7 @@
         </div>
       </section>
 
-      <!-- ================= MODE 5: HOW MANY MORE / HOW MANY LESS ================= -->
+      <!-- ================= 9. HOW MANY MORE / HOW MANY LESS ================= -->
       <section id="modeCompare" class="game-view">
         <div class="compare-container">
           <div class="compare-question-card">
@@ -281,26 +463,18 @@
             <p>Look at the lines! Pair them up to find the difference!</p>
           </div>
 
-          <!-- Visual Groups Display with 1-to-1 matching -->
-          <div class="compare-visual-stage" id="compareVisualStage">
-            <!-- Rendered by JS -->
-          </div>
+          <div class="compare-visual-stage" id="compareVisualStage"></div>
 
-          <!-- Answer Options -->
           <div class="compare-options-container">
             <h4>Pick the correct number:</h4>
-            <div class="compare-choices" id="compareChoices">
-              <!-- Rendered by JS -->
-            </div>
+            <div class="compare-choices" id="compareChoices"></div>
           </div>
 
-          <div class="compare-explanation" id="compareExplanation" style="display: none;">
-            <!-- Formula explained after answer -->
-          </div>
+          <div class="compare-explanation" id="compareExplanation" style="display: none;"></div>
         </div>
       </section>
 
-      <!-- ================= MODE 6: HUNGRY ALLIGATOR (<, >, =) ================= -->
+      <!-- ================= 10. HUNGRY ALLIGATOR ================= -->
       <section id="modeAlligator" class="game-view">
         <div class="alligator-arena">
           <div class="alligator-hint">
@@ -309,12 +483,10 @@
 
           <div class="alligator-duel">
             <div class="alligator-num-bubble" id="alliLeftNum">15</div>
-
             <div class="alligator-mouth-display" id="alliMouthDisplay">
               <span class="alli-sprite" id="alliSprite">🐊</span>
               <span class="alli-sign" id="alliSign">?</span>
             </div>
-
             <div class="alligator-num-bubble" id="alliRightNum">8</div>
           </div>
 
@@ -341,7 +513,7 @@
         </div>
       </section>
 
-      <!-- ================= MODE 7: TEN FRAME BONDS ================= -->
+      <!-- ================= 11. TEN FRAME BONDS ================= -->
       <section id="modeBonds" class="game-view">
         <div class="bonds-container">
           <div class="bonds-prompt">
@@ -355,18 +527,68 @@
             </div>
           </div>
 
-          <!-- 10-Frame Visual Board (2 rows of 5) -->
-          <div class="ten-frame-board" id="tenFrameBoard">
-            <!-- 10 slots rendered by JS -->
-          </div>
+          <div class="ten-frame-board" id="tenFrameBoard"></div>
 
-          <!-- Answer Choices -->
           <div class="bonds-choices-area">
             <h4>Tap the missing number:</h4>
-            <div class="bonds-choices" id="bondsChoices">
-              <!-- Choices rendered by JS -->
-            </div>
+            <div class="bonds-choices" id="bondsChoices"></div>
           </div>
+        </div>
+      </section>
+
+      <!-- ================= 12. STEP LADDER ================= -->
+      <section id="modeLearn" class="game-view">
+        <div class="view-header">
+          <h3>Interactive Number Tower</h3>
+          <p>Watch how numbers grow taller or slide lower! Click any bar to hear its note!</p>
+        </div>
+
+        <div class="tower-stage">
+          <div class="mascot-runner" id="mascotRunner">🐰</div>
+          <div class="towers-container" id="learnTowers"></div>
+        </div>
+
+        <div class="learn-actions">
+          <button id="btnDemoAsc" class="fun-btn green">
+            <span>🪜 Climb Ascending (1 ➔ 10)</span>
+          </button>
+          <button id="btnDemoDesc" class="fun-btn orange">
+            <span>🛝 Slide Descending (10 ➔ 1)</span>
+          </button>
+          <button id="btnDemoRandom" class="fun-btn purple">
+            <span>🎲 Shuffle & Sort!</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= 13. TRAIN STATION ================= -->
+      <section id="modeTrain" class="game-view">
+        <div class="train-track-area">
+          <div class="train-engine-track" id="trainEngineTrack">
+            <div class="train-engine">
+              <span class="engine-smoke">💨</span>
+              <span class="engine-icon">🚂</span>
+              <span class="engine-label">Number Express</span>
+            </div>
+            <div class="carriages-container" id="carriagesContainer"></div>
+          </div>
+        </div>
+
+        <div class="cargo-platform">
+          <div class="platform-header">
+            <h4>📦 Cargo Crates to Load (Click in order!):</h4>
+            <span class="cargo-hint" id="cargoHint">Find the next number...</span>
+          </div>
+          <div class="crates-dock" id="cratesDock"></div>
+        </div>
+      </section>
+
+      <!-- ================= 14. BALLOON POP ================= -->
+      <section id="modeBalloons" class="game-view">
+        <div class="balloon-sky" id="balloonSky"></div>
+        <div class="popped-basket">
+          <h4>🧺 Popped in Order:</h4>
+          <div class="basket-slots" id="basketSlots"></div>
         </div>
       </section>
 
@@ -383,8 +605,8 @@
           ⭐⭐⭐
         </div>
         <div class="modal-buttons">
-          <button id="btnNextRound" class="fun-btn green pulse">Play Next Challenge! 🚀</button>
-          <button id="btnSwitchMode" class="fun-btn purple">Switch Math Game 🎈</button>
+          <button id="btnNextRound" class="fun-btn green pulse">Next Challenge! 🚀</button>
+          <button id="btnSwitchMode" class="fun-btn purple">Switch Activity 🎈</button>
         </div>
       </div>
     </div>
