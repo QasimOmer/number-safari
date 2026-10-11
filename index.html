@@ -69,8 +69,14 @@
 
     <!-- Top Navigation / Mode Selector -->
     <nav class="mode-nav" id="modeNav">
+      <!-- Home Hub -->
+      <button class="nav-btn active nav-home-btn" data-mode="home" data-cat="all">
+        <span class="btn-emoji">🏠</span>
+        <span class="btn-text">Home</span>
+      </button>
+
       <!-- Place Value & Abacus -->
-      <button class="nav-btn active" data-mode="abacus" data-cat="place-value">
+      <button class="nav-btn" data-mode="abacus" data-cat="place-value">
         <span class="btn-emoji">🧮</span>
         <span class="btn-text">Abacus Beads</span>
       </button>
@@ -174,8 +180,26 @@
     <!-- MAIN GAME WORKSPACE -->
     <main class="game-main">
 
+      <!-- ================= 0. HOME SCREEN (GAME CARDS DASHBOARD) ================= -->
+      <section id="modeHome" class="game-view active">
+        <div class="home-hero-card">
+          <div class="home-hero-text">
+            <h2>🎮 Pick a Math Adventure!</h2>
+            <p>14 fun games to learn place value, counting, ordinals, Pakistani money & comparisons!</p>
+          </div>
+          <div class="home-hero-badge">
+            <span class="hero-star-icon">⭐</span>
+            <span class="hero-star-total" id="homeStarTotal">0 Stars</span>
+          </div>
+        </div>
+
+        <div class="games-grid" id="homeGamesGrid">
+          <!-- 14 game cards rendered dynamically by JS -->
+        </div>
+      </section>
+
       <!-- ================= 1. ABACUS BEADS ================= -->
-      <section id="modeAbacus" class="game-view active">
+      <section id="modeAbacus" class="game-view">
         <div class="abacus-container">
           <div class="abacus-target-card">
             <span>Show this number on the Abacus:</span>
@@ -606,7 +630,7 @@
         </div>
         <div class="modal-buttons">
           <button id="btnNextRound" class="fun-btn green pulse">Next Challenge! 🚀</button>
-          <button id="btnSwitchMode" class="fun-btn purple">Switch Activity 🎈</button>
+          <button id="btnSwitchMode" class="fun-btn purple">Choose Game 🏠</button>
         </div>
       </div>
     </div>

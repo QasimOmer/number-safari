@@ -1894,6 +1894,182 @@ body {
   box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
 }
 
+/* ================= 0. HOME SCREEN & GAME CARDS ================= */
+.home-hero-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #EC4899 100%);
+  border-radius: 26px;
+  padding: 1.5rem 2rem;
+  color: white;
+  box-shadow: 0 12px 25px rgba(79, 70, 229, 0.28);
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.home-hero-text h2 {
+  font-family: var(--font-bubble);
+  font-size: 1.85rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.5px;
+}
+
+.home-hero-text p {
+  font-size: 1.05rem;
+  opacity: 0.95;
+  font-weight: 700;
+  max-width: 650px;
+}
+
+.home-hero-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  font-family: var(--font-bubble);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.hero-star-icon {
+  font-size: 1.6rem;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.game-card {
+  background: white;
+  border: 3px solid #E2E8F0;
+  border-radius: 26px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #4F46E5, #06B6D4);
+  opacity: 0.8;
+}
+
+.game-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 28px -6px rgba(79, 70, 229, 0.22);
+  border-color: #818CF8;
+}
+
+.game-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.game-card-icon {
+  font-size: 3.2rem;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.25s ease;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.game-card:hover .game-card-icon {
+  transform: scale(1.15) rotate(6deg);
+}
+
+.game-card-tag {
+  font-family: var(--font-bubble);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: #F1F5F9;
+  color: #475569;
+}
+
+.game-card-tag.cat-place-value { background: #EDE9FE; color: #6D28D9; }
+.game-card-tag.cat-counting { background: #E0F2FE; color: #0369A1; }
+.game-card-tag.cat-ordinal { background: #FEF3C7; color: #B45309; }
+.game-card-tag.cat-money { background: #D1FAE5; color: #047857; }
+.game-card-tag.cat-compare { background: #FCE7F3; color: #BE185D; }
+
+.game-card-body h3 {
+  font-family: var(--font-bubble);
+  font-size: 1.35rem;
+  color: #1E293B;
+  margin-bottom: 0.35rem;
+}
+
+.game-card-body p {
+  font-size: 0.95rem;
+  color: #64748B;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.game-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: auto;
+}
+
+.game-card-btn {
+  background: linear-gradient(135deg, #4F46E5, #6366F1);
+  color: white;
+  border: none;
+  font-family: var(--font-bubble);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+  pointer-events: none;
+}
+
+.game-card:hover .game-card-btn {
+  background: linear-gradient(135deg, #4338CA, #4F46E5);
+  transform: scale(1.05);
+}
+
+.nav-home-btn {
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+}
+.nav-home-btn.active {
+  background: linear-gradient(135deg, #0EA5E9, #0284C7);
+  box-shadow: 0 8px 18px rgba(14, 165, 233, 0.35);
+}
+
 /* ================= 1. ABACUS BEADS ================= */
 .abacus-container {
   display: flex;
@@ -2872,6 +3048,48 @@ body {
     padding: 1rem 0.75rem;
     border-radius: 22px;
     border-width: 3px;
+  }
+
+  /* Home View Mobile */
+  .home-hero-card {
+    padding: 1.15rem 1.25rem;
+    border-radius: 20px;
+    gap: 0.9rem;
+  }
+
+  .home-hero-text h2 {
+    font-size: 1.45rem;
+  }
+
+  .home-hero-text p {
+    font-size: 0.92rem;
+  }
+
+  .home-hero-badge {
+    padding: 0.45rem 0.9rem;
+    font-size: 1.05rem;
+  }
+
+  .games-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .game-card {
+    padding: 1.15rem;
+    border-radius: 20px;
+  }
+
+  .game-card-icon {
+    font-size: 2.7rem;
+  }
+
+  .game-card-body h3 {
+    font-size: 1.2rem;
+  }
+
+  .game-card-body p {
+    font-size: 0.88rem;
   }
 
   /* MODE 1: Step Ladder */

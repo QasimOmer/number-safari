@@ -4,7 +4,7 @@
 
 // Global Game State
 const state = {
-  mode: 'abacus',        // 'abacus', 'baseTen', 'numberNames', 'ordinal', 'backward10', 'beforeAfter', 'countMoney', 'coins', 'compare', 'alligator', 'bonds', 'learn', 'train', 'balloons'
+  mode: 'home',          // 'home', 'abacus', 'baseTen', 'numberNames', 'ordinal', 'backward10', 'beforeAfter', 'countMoney', 'coins', 'compare', 'alligator', 'bonds', 'learn', 'train', 'balloons'
   activeCategory: 'all',
   difficulty: 'easy',     // 'easy', 'medium', 'hard'
   orderType: 'asc',       // 'asc', 'desc', 'mix'
@@ -35,6 +35,122 @@ const state = {
   alligatorData: null,
   bondsData: null
 };
+
+// Master List of 14 Math Games for Home Dashboard
+const GAMES_LIST = [
+  {
+    id: 'abacus',
+    title: 'Abacus Beads',
+    icon: '🧮',
+    cat: 'place-value',
+    catName: 'Place Value',
+    desc: 'Slide tens and ones beads on rods to make target numbers up to 100!'
+  },
+  {
+    id: 'baseTen',
+    title: 'Tens & Ones Blocks',
+    icon: '🧱',
+    cat: 'place-value',
+    catName: 'Place Value',
+    desc: 'Count 10-rod towers and 1-unit cubes to figure out the secret number!'
+  },
+  {
+    id: 'numberNames',
+    title: 'Write Number Names',
+    icon: '🔤',
+    cat: 'place-value',
+    catName: 'Spelling',
+    desc: 'Tap letter blocks in order to spell number words: One, Five, Ten, Twenty!'
+  },
+  {
+    id: 'ordinal',
+    title: 'Color Ordinal Numbers',
+    icon: '🎨',
+    cat: 'ordinal',
+    catName: 'Ordinal Positions',
+    desc: 'Pick your color and paint the 3rd cart, 7th bike, or 1st car in the lineup!'
+  },
+  {
+    id: 'backward10',
+    title: 'Backward in 10s',
+    icon: '⏪',
+    cat: 'counting',
+    catName: 'Skip Counting',
+    desc: 'Rocket countdown! Blast backwards in tens: 100, 90, 80, 70 down to zero!'
+  },
+  {
+    id: 'beforeAfter',
+    title: 'Before, Between & After',
+    icon: '🎯',
+    cat: 'counting',
+    catName: 'Number Sense',
+    desc: 'Look at neighboring numbers and fill in the missing stepping stone!'
+  },
+  {
+    id: 'learn',
+    title: 'Ascending & Descending Ladder',
+    icon: '🪜',
+    cat: 'counting',
+    catName: 'Order Concept',
+    desc: 'Watch the safari explorer climb UP (Small to Big) and slide DOWN (Big to Small)!'
+  },
+  {
+    id: 'train',
+    title: 'Train Express Order',
+    icon: '🚂',
+    cat: 'counting',
+    catName: 'Sequencing',
+    desc: 'Load number cargo crates onto train wagons in ascending or descending order!'
+  },
+  {
+    id: 'balloons',
+    title: 'Balloon Pop Arcade',
+    icon: '🎈',
+    cat: 'counting',
+    catName: 'Fun Arcade',
+    desc: 'Pop floating colorful balloons from lowest to highest or highest to lowest!'
+  },
+  {
+    id: 'countMoney',
+    title: 'Count Pakistani Money',
+    icon: '💵',
+    cat: 'money',
+    catName: 'PKR Currency',
+    desc: 'Count Pakistani Rupees! Tap Rs 1, Rs 2, Rs 5 coins & Rs 10, Rs 20 currency notes!'
+  },
+  {
+    id: 'coins',
+    title: 'PKR Toy Shop',
+    icon: '🪙',
+    cat: 'money',
+    catName: 'Toy Shopping',
+    desc: 'Pay with authentic Pakistani rupee coins to buy toys and fill your backpack!'
+  },
+  {
+    id: 'compare',
+    title: 'How Many Less / More?',
+    icon: '⚖️',
+    cat: 'compare',
+    catName: 'Comparison',
+    desc: 'Compare two plates of fruit and count exactly how many more or less there are!'
+  },
+  {
+    id: 'alligator',
+    title: 'Hungry Alligator',
+    icon: '🐊',
+    cat: 'compare',
+    catName: 'Greater / Less Than',
+    desc: 'The greedy crocodile always chomps the bigger meal! Pick >, <, or =.'
+  },
+  {
+    id: 'bonds',
+    title: 'Ten Frame Bonds',
+    icon: '🧩',
+    cat: 'compare',
+    catName: 'Number Bonds',
+    desc: 'Fill the ten frame grid with dots to find the magic partner that makes 10!'
+  }
+];
 
 // ==========================================
 // Sound Synthesis Engine (Web Audio API)
@@ -337,6 +453,9 @@ function updateStatsUI() {
   document.getElementById('toyCount').textContent = state.toys.length;
   document.getElementById('backpackCount').textContent = state.toys.length;
 
+  const homeStarEl = document.getElementById('homeStarTotal');
+  if (homeStarEl) homeStarEl.textContent = `${state.stars} Stars`;
+
   localStorage.setItem('ns_stars', state.stars);
   localStorage.setItem('ns_streak', state.streak);
   localStorage.setItem('ns_toys', JSON.stringify(state.toys));
@@ -369,6 +488,20 @@ function updateMissionBanner() {
   const title = document.getElementById('missionTitle');
   const desc = document.getElementById('missionDesc');
   const orderGroup = document.getElementById('orderGroup');
+  const toolbar = document.querySelector('.game-toolbar');
+
+  if (state.mode === 'home') {
+    if (toolbar) toolbar.style.display = 'none';
+    orderGroup.style.display = 'none';
+    banner.className = 'mission-banner';
+    banner.style.background = 'linear-gradient(135deg, #4F46E5, #7C3AED)';
+    icon.textContent = '🌟';
+    title.innerHTML = 'Welcome to Number Safari! 🚀';
+    desc.innerHTML = 'Choose any math game card below to start playing!';
+    return;
+  }
+
+  if (toolbar) toolbar.style.display = 'flex';
 
   // Ordering modes show the Asc/Desc toolbar selector
   if (['learn', 'train', 'balloons'].includes(state.mode)) {
@@ -465,6 +598,64 @@ function updateMissionBanner() {
 }
 
 // ==========================================
+// Home Dashboard Cards & Mode Switching
+// ==========================================
+function renderHomeCards() {
+  const grid = document.getElementById('homeGamesGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const filtered = GAMES_LIST.filter(g => {
+    return state.activeCategory === 'all' || g.cat === state.activeCategory;
+  });
+
+  filtered.forEach(game => {
+    const card = document.createElement('div');
+    card.className = 'game-card';
+    card.dataset.mode = game.id;
+    card.innerHTML = `
+      <div class="game-card-header">
+        <span class="game-card-icon">${game.icon}</span>
+        <span class="game-card-tag cat-${game.cat}">${game.catName}</span>
+      </div>
+      <div class="game-card-body">
+        <h3>${game.title}</h3>
+        <p>${game.desc}</p>
+      </div>
+      <div class="game-card-footer">
+        <button class="game-card-btn" tabindex="-1">
+          <span>Play Now</span>
+          <span>➔</span>
+        </button>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      sfx.playFanfare();
+      speak(`Starting ${game.title}! Let's have fun!`);
+      switchToMode(game.id);
+    });
+
+    grid.appendChild(card);
+  });
+}
+
+function switchToMode(modeId) {
+  state.mode = modeId;
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.mode === modeId);
+  });
+  document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
+
+  const viewId = `mode${modeId.charAt(0).toUpperCase() + modeId.slice(1)}`;
+  const view = document.getElementById(viewId);
+  if (view) view.classList.add('active');
+
+  startNewRound();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ==========================================
 // Master Round Controller
 // ==========================================
 function startNewRound() {
@@ -478,6 +669,11 @@ function startNewRound() {
   }
 
   updateMissionBanner();
+
+  if (state.mode === 'home') {
+    renderHomeCards();
+    return;
+  }
 
   if (state.mode === 'abacus') setupAbacusRound();
   else if (state.mode === 'ordinal') setupOrdinalRound();
@@ -1958,17 +2154,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
       navButtons.forEach(btn => {
         const cat = btn.dataset.cat;
-        if (state.activeCategory === 'all' || cat === state.activeCategory) {
+        if (btn.dataset.mode === 'home' || state.activeCategory === 'all' || cat === state.activeCategory) {
           btn.style.display = 'inline-flex';
-          if (!firstVisible) firstVisible = btn;
+          if (!firstVisible && btn.dataset.mode !== 'home') firstVisible = btn;
         } else {
           btn.style.display = 'none';
         }
       });
 
-      // If active mode button is hidden by category filter, switch to first visible button
+      renderHomeCards();
+
+      // If active mode button is hidden by category filter and not on home, switch to first visible button
       const activeBtn = document.querySelector('.nav-btn.active');
-      if (activeBtn && activeBtn.style.display === 'none' && firstVisible) {
+      if (state.mode !== 'home' && activeBtn && activeBtn.style.display === 'none' && firstVisible) {
         firstVisible.click();
       }
     });
@@ -1978,19 +2176,20 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       sfx.playPop();
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
-
-      btn.classList.add('active');
-      state.mode = btn.dataset.mode;
-
-      const viewId = `mode${state.mode.charAt(0).toUpperCase() + state.mode.slice(1)}`;
-      const view = document.getElementById(viewId);
-      if (view) view.classList.add('active');
-
-      startNewRound();
+      switchToMode(btn.dataset.mode);
     });
   });
+
+  // Logo / Mascot click to return Home
+  const brandEl = document.querySelector('.brand');
+  if (brandEl) {
+    brandEl.style.cursor = 'pointer';
+    brandEl.title = 'Back to Home';
+    brandEl.addEventListener('click', () => {
+      sfx.playPop();
+      switchToMode('home');
+    });
+  }
 
   // Difficulty Selector
   document.querySelectorAll('#diffControl .seg-btn').forEach(btn => {
@@ -2137,16 +2336,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnSwitchMode').addEventListener('click', () => {
     sfx.playPop();
     closeModal();
-    const modes = [
-      'abacus', 'baseTen', 'numberNames', 'ordinal', 'backward10',
-      'beforeAfter', 'countMoney', 'coins', 'compare', 'alligator',
-      'bonds', 'learn', 'train', 'balloons'
-    ];
-    const nextIdx = (modes.indexOf(state.mode) + 1) % modes.length;
-    const nextMode = modes[nextIdx];
-
-    const targetNav = document.querySelector(`.nav-btn[data-mode="${nextMode}"]`);
-    if (targetNav) targetNav.click();
+    switchToMode('home');
   });
 
   // Initial Start
