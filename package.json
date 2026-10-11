@@ -1,0 +1,20 @@
+{
+  "name": "number-safari",
+  "version": "1.0.0",
+  "description": "1st Grade Math Adventure - Interactive Learning Web App",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "math",
+    "kids",
+    "educational",
+    "first-grade",
+    "ascending",
+    "descending",
+    "pkr"
+  ],
+  "author": "Qasim Omer",
+  "license": "MIT"
+}

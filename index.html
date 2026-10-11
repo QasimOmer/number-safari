@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#4F46E5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Number Safari - 1st Grade Math Adventure!</title>
+  <!-- Google Fonts: Fredoka & Nunito for child-friendly typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Floating background decorations -->
+  <div class="bg-clouds">
+    <div class="cloud cloud-1">☁️</div>
+    <div class="cloud cloud-2">☁️</div>
+    <div class="cloud cloud-3">☀️</div>
+    <div class="cloud cloud-4">⭐</div>
+    <div class="cloud cloud-5">🎈</div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header with logo and stats -->
+    <header class="game-header">
+      <div class="brand">
+        <span class="brand-mascot" id="mascotIcon">🚀</span>
+        <div class="brand-text">
+          <h1>Number Safari</h1>
+          <span class="subtitle">1st Grade Math Adventure! 🌟</span>
+        </div>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-pill stars-pill">
+          <span class="stat-icon">⭐</span>
+          <span class="stat-value" id="starCount">0</span>
+          <span class="stat-label">Stars</span>
+        </div>
+        <div class="stat-pill streak-pill">
+          <span class="stat-icon">🔥</span>
+          <span class="stat-value" id="streakCount">0</span>
+          <span class="stat-label">Streak</span>
+        </div>
+        <div class="stat-pill toys-pill" id="toysPill" title="Toys in Backpack">
+          <span class="stat-icon">🎒</span>
+          <span class="stat-value" id="toyCount">0</span>
+          <span class="stat-label">Toys</span>
+        </div>
+        <div class="sound-controls">
+          <button id="btnVoice" class="icon-toggle active" title="Toggle Voice Read Aloud">🗣️</button>
+          <button id="btnSound" class="icon-toggle active" title="Toggle Sound FX">🔊</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Top Navigation / Mode Selector -->
+    <nav class="mode-nav">
+      <button class="nav-btn active" data-mode="learn">
+        <span class="btn-emoji">🪜</span>
+        <span class="btn-text">Step Ladder</span>
+      </button>
+      <button class="nav-btn" data-mode="train">
+        <span class="btn-emoji">🚂</span>
+        <span class="btn-text">Train Order</span>
+      </button>
+      <button class="nav-btn" data-mode="balloons">
+        <span class="btn-emoji">🎈</span>
+        <span class="btn-text">Balloon Pop</span>
+      </button>
+      <button class="nav-btn" data-mode="coins">
+        <span class="btn-emoji">🪙</span>
+        <span class="btn-text">Coin Toy Shop</span>
+      </button>
+      <button class="nav-btn" data-mode="compare">
+        <span class="btn-emoji">⚖️</span>
+        <span class="btn-text">How Many Less?</span>
+      </button>
+      <button class="nav-btn" data-mode="alligator">
+        <span class="btn-emoji">🐊</span>
+        <span class="btn-text">Hungry Alligator</span>
+      </button>
+      <button class="nav-btn" data-mode="bonds">
+        <span class="btn-emoji">🧩</span>
+        <span class="btn-text">Ten Frame Bonds</span>
+      </button>
+    </nav>
+
+    <!-- Game Settings / Controls Panel -->
+    <section class="game-toolbar">
+      <div class="toolbar-group">
+        <label id="diffLabel">Level:</label>
+        <div class="segmented-control" id="diffControl">
+          <button class="seg-btn active" data-diff="easy">🐣 Easy</button>
+          <button class="seg-btn" data-diff="medium">🦊 Medium</button>
+          <button class="seg-btn" data-diff="hard">🦁 Super Star</button>
+        </div>
+      </div>
+
+      <div class="toolbar-group" id="orderGroup">
+        <label>Order:</label>
+        <div class="segmented-control" id="orderControl">
+          <button class="seg-btn active" data-order="asc">⬆️ Ascending</button>
+          <button class="seg-btn" data-order="desc">⬇️ Descending</button>
+          <button class="seg-btn" data-order="mix">🔀 Mix</button>
+        </div>
+      </div>
+
+      <button id="btnNewRound" class="action-btn bouncy">
+        <span>🔄 Next Challenge</span>
+      </button>
+    </section>
+
+    <!-- Mission Explainer Banner -->
+    <div class="mission-banner" id="missionBanner">
+      <div class="mission-icon" id="missionIcon">🚀</div>
+      <div class="mission-content">
+        <h2 id="missionTitle">Ascending Order: Going UP! 🧗‍♂️</h2>
+        <p id="missionDesc">Put numbers from <strong>SMALLEST</strong> to <strong>BIGGEST</strong> (Low ➔ High)</p>
+      </div>
+      <button id="btnSpeakRule" class="speak-btn" title="Hear Question Aloud">🔊 Read Aloud</button>
+    </div>
+
+    <!-- MAIN GAME WORKSPACE -->
+    <main class="game-main">
+
+      <!-- ================= MODE 1: STEP LADDER (LEARN) ================= -->
+      <section id="modeLearn" class="game-view active">
+        <div class="view-header">
+          <h3>Interactive Number Tower</h3>
+          <p>Watch how numbers grow taller or slide lower! Click any bar to hear its note!</p>
+        </div>
+
+        <div class="tower-stage">
+          <div class="mascot-runner" id="mascotRunner">🐰</div>
+          <div class="towers-container" id="learnTowers">
+            <!-- Towers rendered by JS -->
+          </div>
+        </div>
+
+        <div class="learn-actions">
+          <button id="btnDemoAsc" class="fun-btn green">
+            <span>🪜 Climb Ascending (1 ➔ 10)</span>
+          </button>
+          <button id="btnDemoDesc" class="fun-btn orange">
+            <span>🛝 Slide Descending (10 ➔ 1)</span>
+          </button>
+          <button id="btnDemoRandom" class="fun-btn purple">
+            <span>🎲 Shuffle & Sort!</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= MODE 2: TRAIN STATION ================= -->
+      <section id="modeTrain" class="game-view">
+        <div class="train-track-area">
+          <div class="train-engine-track" id="trainEngineTrack">
+            <div class="train-engine">
+              <span class="engine-smoke">💨</span>
+              <span class="engine-icon">🚂</span>
+              <span class="engine-label">Number Express</span>
+            </div>
+            <!-- Carriages / Drop slots -->
+            <div class="carriages-container" id="carriagesContainer">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="cargo-platform">
+          <div class="platform-header">
+            <h4>📦 Cargo Crates to Load (Click in order!):</h4>
+            <span class="cargo-hint" id="cargoHint">Find the next number...</span>
+          </div>
+          <div class="crates-dock" id="cratesDock">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MODE 3: BALLOON POP ================= -->
+      <section id="modeBalloons" class="game-view">
+        <div class="balloon-sky" id="balloonSky">
+          <!-- Floating balloons rendered by JS -->
+        </div>
+
+        <div class="popped-basket">
+          <h4>🧺 Popped in Order:</h4>
+          <div class="basket-slots" id="basketSlots">
+            <!-- Slots rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MODE 4: COIN TOY SHOP ================= -->
+      <section id="modeCoins" class="game-view">
+        <div class="toy-shop-grid">
+          <!-- Left: Toy Showcase & Cash Register -->
+          <div class="toy-showcase-panel">
+            <div class="shopkeeper-speech" id="shopkeeperSpeech">
+              "Hi there! Tap the coins to pay exact change!"
+            </div>
+            <div class="toy-display-card">
+              <span class="toy-icon" id="shopToyIcon">🧸</span>
+              <h3 class="toy-name" id="shopToyName">Teddy Bear</h3>
+              <div class="price-tag">
+                <span class="price-label">Price:</span>
+                <span class="price-val" id="shopToyPrice">Rs 12</span>
+              </div>
+            </div>
+
+            <div class="cash-register">
+              <div class="register-display">
+                <div class="calc-row">
+                  <span>Target:</span>
+                  <strong id="regTarget">Rs 12</strong>
+                </div>
+                <div class="calc-row">
+                  <span>In Register:</span>
+                  <strong id="regPaid">Rs 0</strong>
+                </div>
+                <div class="calc-status" id="regStatus">Need Rs 12 more</div>
+              </div>
+
+              <!-- Coins deposited in tray -->
+              <div class="paid-coins-tray" id="paidCoinsTray">
+                <span class="empty-tray-hint">Click PKR coins below to add!</span>
+              </div>
+
+              <div class="register-actions">
+                <button id="btnClearCoins" class="fun-btn-sm red">↺ Reset Coins</button>
+                <button id="btnCheckCoins" class="fun-btn-sm green">✅ Buy Toy!</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Coins Wallet Tray & Toy Backpack -->
+          <div class="coins-wallet-panel">
+            <h4>🪙 PKR Wallet (Click to Add):</h4>
+            <div class="coins-selector">
+              <button class="coin-btn coin-rs1" data-coin="1" title="Rs 1 Coin">
+                <span class="coin-val">Rs 1</span>
+                <span class="coin-name">1 Rupee</span>
+              </button>
+              <button class="coin-btn coin-rs2" data-coin="2" title="Rs 2 Coin">
+                <span class="coin-val">Rs 2</span>
+                <span class="coin-name">2 Rupees</span>
+              </button>
+              <button class="coin-btn coin-rs5" data-coin="5" title="Rs 5 Coin">
+                <span class="coin-val">Rs 5</span>
+                <span class="coin-name">5 Rupees</span>
+              </button>
+              <button class="coin-btn coin-rs10" data-coin="10" title="Rs 10 Coin">
+                <span class="coin-val">Rs 10</span>
+                <span class="coin-name">10 Rupees</span>
+              </button>
+              <button class="coin-btn coin-rs20" data-coin="20" title="Rs 20 Note">
+                <span class="coin-val">Rs 20</span>
+                <span class="coin-name">20 Rupees</span>
+              </button>
+            </div>
+
+            <div class="toy-backpack-area">
+              <h4>🎒 My Collected Toys (<span id="backpackCount">0</span>):</h4>
+              <div class="backpack-shelf" id="backpackShelf">
+                <span class="no-toys-hint">Buy toys to fill your backpack!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MODE 5: HOW MANY MORE / HOW MANY LESS ================= -->
+      <section id="modeCompare" class="game-view">
+        <div class="compare-container">
+          <div class="compare-question-card">
+            <h3 id="compareQuestionText">How many LESS Bananas are there than Apples?</h3>
+            <p>Look at the lines! Pair them up to find the difference!</p>
+          </div>
+
+          <!-- Visual Groups Display with 1-to-1 matching -->
+          <div class="compare-visual-stage" id="compareVisualStage">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Answer Options -->
+          <div class="compare-options-container">
+            <h4>Pick the correct number:</h4>
+            <div class="compare-choices" id="compareChoices">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <div class="compare-explanation" id="compareExplanation" style="display: none;">
+            <!-- Formula explained after answer -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MODE 6: HUNGRY ALLIGATOR (<, >, =) ================= -->
+      <section id="modeAlligator" class="game-view">
+        <div class="alligator-arena">
+          <div class="alligator-hint">
+            The Hungry Alligator 🐊 always chomps the <strong>BIGGER</strong> number!
+          </div>
+
+          <div class="alligator-duel">
+            <div class="alligator-num-bubble" id="alliLeftNum">15</div>
+
+            <div class="alligator-mouth-display" id="alliMouthDisplay">
+              <span class="alli-sprite" id="alliSprite">🐊</span>
+              <span class="alli-sign" id="alliSign">?</span>
+            </div>
+
+            <div class="alligator-num-bubble" id="alliRightNum">8</div>
+          </div>
+
+          <div class="alligator-controls">
+            <h4>Which way does the Alligator chomp?</h4>
+            <div class="alli-btn-group">
+              <button class="alli-btn" data-sign=">">
+                <span class="alli-btn-icon">&gt;</span>
+                <span class="alli-btn-label">Greater Than</span>
+                <span class="alli-btn-sub">Eats Left Number</span>
+              </button>
+              <button class="alli-btn" data-sign="=">
+                <span class="alli-btn-icon">=</span>
+                <span class="alli-btn-label">Equal To</span>
+                <span class="alli-btn-sub">Both Are Same!</span>
+              </button>
+              <button class="alli-btn" data-sign="<">
+                <span class="alli-btn-icon">&lt;</span>
+                <span class="alli-btn-label">Less Than</span>
+                <span class="alli-btn-sub">Eats Right Number</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MODE 7: TEN FRAME BONDS ================= -->
+      <section id="modeBonds" class="game-view">
+        <div class="bonds-container">
+          <div class="bonds-prompt">
+            <h3 id="bondsQuestionTitle">Make 10: How many more dots do we need?</h3>
+            <div class="bonds-equation" id="bondsEquation">
+              <span class="eq-num" id="eqA">7</span>
+              <span class="eq-op">+</span>
+              <span class="eq-slot" id="eqMissing">?</span>
+              <span class="eq-op">=</span>
+              <span class="eq-num" id="eqTotal">10</span>
+            </div>
+          </div>
+
+          <!-- 10-Frame Visual Board (2 rows of 5) -->
+          <div class="ten-frame-board" id="tenFrameBoard">
+            <!-- 10 slots rendered by JS -->
+          </div>
+
+          <!-- Answer Choices -->
+          <div class="bonds-choices-area">
+            <h4>Tap the missing number:</h4>
+            <div class="bonds-choices" id="bondsChoices">
+              <!-- Choices rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Celebration Modal -->
+    <div class="modal-overlay" id="celebrationModal">
+      <div class="modal-card">
+        <div class="modal-sparkles">✨ 🎉 ✨</div>
+        <div class="modal-avatar">🏆</div>
+        <h2 id="modalTitle">Awesome Job!</h2>
+        <p id="modalMessage">You solved the math puzzle perfectly!</p>
+        <div class="modal-stars" id="modalStars">
+          ⭐⭐⭐
+        </div>
+        <div class="modal-buttons">
+          <button id="btnNextRound" class="fun-btn green pulse">Play Next Challenge! 🚀</button>
+          <button id="btnSwitchMode" class="fun-btn purple">Switch Math Game 🎈</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Canvas for Celebratory Confetti -->
+    <canvas id="confettiCanvas"></canvas>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
