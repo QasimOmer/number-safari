@@ -643,7 +643,11 @@ function renderHomeCards() {
 function switchToMode(modeId) {
   state.mode = modeId;
   document.querySelectorAll('.nav-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.mode === modeId);
+    const isActive = b.dataset.mode === modeId;
+    b.classList.toggle('active', isActive);
+    if (isActive) {
+      b.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
   });
   document.querySelectorAll('.game-view').forEach(v => v.classList.remove('active'));
 
