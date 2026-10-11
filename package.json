@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "1st Grade Math Adventure - Interactive Learning Web App",
   "scripts": {
-    "build": "echo static",
-    "start": "node server.js"
+    "start": "node local-server.js"
   },
   "keywords": [
     "math",
